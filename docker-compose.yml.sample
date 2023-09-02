@@ -1,0 +1,47 @@
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      # Only will build development stage from our dockerfile
+      target: development
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env
+    # Run a command against the development stage of the image
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    networks:
+      - social
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: "social"
+      POSTGRES_USER: "social"
+      POSTGRES_PASSWORD: "1234"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - social-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - social
+  adminer:
+    image: adminer:latest
+    ports:
+      - "5050:8080"
+    depends_on:
+      - postgres
+    networks:
+      - social
+
+volumes:
+  social-data:
+
+networks:
+  social:
+    driver: bridge

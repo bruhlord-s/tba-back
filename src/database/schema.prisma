@@ -15,15 +15,18 @@ model User {
   id       Int      @default(autoincrement()) @id
   username String   @unique
   email    String   @unique
-  name     String  
+  name     String
+  password String  
   avatar   String?
   bio      String?
   posts    Post[]
 }
 
 model Post {
-  id       Int    @default(autoincrement()) @id
-  content  String
-  author   User   @relation(fields: [authorId], references: [id])
-  authorId Int
+  id        Int       @default(autoincrement()) @id
+  content   String
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

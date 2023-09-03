@@ -37,7 +37,10 @@ export class AuthService {
       throw new UnauthorizedException(`Wrong email or password`);
     }
 
-    const isPasswordValid = user.password === password;
+    const isPasswordValid = await this.passwordService.compare(
+      password,
+      user.password,
+    );
 
     if (!isPasswordValid) {
       throw new UnauthorizedException(`Wrong email or password`);

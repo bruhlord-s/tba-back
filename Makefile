@@ -19,7 +19,10 @@ up-quiet: ## Start containers with no output
 down: ## Shut down containers
 	@docker-compose down
 
-	.PHONY: help
+migrate: ## Run migrations
+	@docker exec -it api npx prisma migrate dev
+
+.PHONY: help
 
 help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

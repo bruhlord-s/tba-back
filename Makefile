@@ -22,6 +22,12 @@ down: ## Shut down containers
 migrate: ## Run migrations
 	@docker exec -it api npx prisma migrate dev
 
+api-sh: ## Open bash for api container
+	@docker exec -it api /bin/sh
+
+test-watch: ## Run tests in watch mode
+	@docker exec -it api npm run test:watch
+
 .PHONY: help
 
 help:

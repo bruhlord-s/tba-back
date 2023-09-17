@@ -12,13 +12,13 @@ export class AuthController {
 
   @Post('register')
   @ApiOkResponse({ type: AuthEntity })
-  register(@Body() data: RegisterDto) {
-    return this.authService.register(data);
+  async register(@Body() data: RegisterDto) {
+    return new AuthEntity(await this.authService.register(data));
   }
 
   @Post('login')
   @ApiOkResponse({ type: AuthEntity })
-  login(@Body() { email, password }: LoginDto) {
-    return this.authService.login(email, password);
+  async login(@Body() { email, password }: LoginDto) {
+    return new AuthEntity(await this.authService.login(email, password));
   }
 }

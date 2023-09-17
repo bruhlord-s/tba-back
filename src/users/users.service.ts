@@ -5,19 +5,6 @@ import { PrismaService } from 'src/prisma.service';
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  posts(username: string) {
-    return this.prisma.user.findUnique({
-      where: { username: username },
-      select: {
-        posts: {
-          include: {
-            author: true,
-          },
-        },
-      },
-    });
-  }
-
   findOne(id: number) {
     return this.prisma.user.findUnique({
       where: { id: id },
